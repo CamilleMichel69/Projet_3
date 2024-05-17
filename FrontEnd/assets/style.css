@@ -53,6 +53,35 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+#editModeBanner {
+	display: none;
+	background-color: black;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+	font-size: 1.2em;
+}
+#editModeBanner i {
+	margin-right: 5px;
+}
+#editIconContainer {
+	display: none;
+	vertical-align: middle;
+	font-family: 'Work Sans';
+	font-weight: normal;
+	margin-left: 15px;
+	color: black;
+	font-size: 15px;
+}
+#editIconContainer a {
+	text-decoration: none;
+  	color: inherit;
+}
+
 header {
 	display: flex;
 	justify-content: space-between;
@@ -95,8 +124,14 @@ nav li {
 	font-size: 1.2em;
 }
 
+nav li a {
+	text-decoration: none;
+	color: inherit;
+}
+
 li:hover {
 	color: #B1663C;
+	cursor: pointer;
 }
 #introduction {
 	display: flex;
@@ -123,7 +158,8 @@ li:hover {
 }
 #portfolio h2 {
 	text-align: center;
-	margin-bottom: 1em;
+	margin-top: 3em;
+	margin-bottom: 2em;
 }
 .filters {
 	display: flex;
@@ -142,7 +178,7 @@ li:hover {
     transition: background-color 0.3s, color 0.3s; 
 }
 .category_filter:hover {
-	background: linear-gradient(to bottom, #FFFFFF, #1D6154);
+	background-color: #1D6154;
     color: white;
 	cursor: pointer;
 }
@@ -211,3 +247,63 @@ footer nav ul {
 	margin: 2em
 }
 
+/* Log In */
+
+.login_link {
+	font-weight: bold;
+}
+
+#login h2 {
+	text-align: center;
+	margin-top: 5em;
+	margin-bottom: 2em;
+}
+
+#login form {
+	max-width: 400px;
+	margin: 0 auto 300px;
+}
+#login input[type="text"],
+#login input[type="password"] {
+	width: 100%;
+	padding: 18px;
+	margin: 5px 0 40px 0;
+	box-sizing: border-box;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+
+}
+#login input[type="submit"] {
+	display: flex;
+	width: 50%;
+	padding: 10px;
+	margin-top: 0;
+	justify-content: center;
+	background-color: #1D6154;
+	color: #fff;
+	border: none;
+	cursor: pointer;
+}
+#login input[type="submit"]:hover {
+	background-color: #14503B;
+}
+.forgot-password {
+	text-align: center;
+	margin-bottom: 40px;
+}
+.forgot-password a {
+	text-decoration: underline;
+}
+#login input.error-input {
+    border: 1px solid red;
+}
+#errorMessage{
+	color: red;
+	text-align: center;
+	font-size: 15px;
+}
+
+
+#logoutLink {
+	display:none;
+}

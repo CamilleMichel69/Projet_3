@@ -8,17 +8,24 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="index.js" defer></script>
 </head>
 <body>
 <header>
+	<div id="editModeBanner">
+		<i class="fa-regular fa-pen-to-square"></i> Mode édition
+	</div>	
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li>projets</li>
-			<li>contact</li>
-			<li>login</li>
+			<li><a href="#contact">contact</a></li>
+			<li>
+				<a id="loginLink" href="./login.html">login</a>
+				<a id="logoutLink" class="only-admin" href="#">logout</a>
+			</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
@@ -36,8 +43,13 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<h2>Mes Projets</h2>
-		<div class="filters"></div>
+		<h2>
+			Mes Projets 
+			<span id="editIconContainer" class="edit-icon-container">
+				<a href="#"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+			</span>
+		</h2>
+		<div id="filters" class="filters"></div>
 		<div class="gallery"></div>
 	</section>
 	<section id="contact">

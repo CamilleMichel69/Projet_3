@@ -86,3 +86,42 @@ async function getCategories() {
 }
 
 getCategories();
+
+//Gestion après connexion réussie 
+
+// Vérifie si l'utilisateur est connecté à chaque chargement de la page
+window.addEventListener('load', () => {
+    const token = localStorage.getItem('token');
+    if (token) {
+        // Changement du mot "login" en "logout"
+        const loginLink = document.getElementById('loginLink');
+        loginLink.textContent = 'logout';
+        loginLink.href = '#';
+
+        // Disparition des filtres
+        const filterButtons = document.querySelectorAll('.filters#filters');
+        filterButtons.forEach(button => {
+            button.style.display = 'none';
+        });
+
+        // Sélectionne le bandeau de mode édition
+        const editModeBanner = document.getElementById('editModeBanner');
+        editModeBanner.style.display = 'block';
+        const contentBelowBanner = document.querySelector('header');
+        contentBelowBanner.style.marginTop = '100px';
+
+        // Affiche le bouton modifier pour "Mes Projets"
+        const editIconContainer = document.getElementById('editIconContainer');
+        editIconContainer.style.display = 'inline-block';
+    }
+});
+
+// Action en cliquant sur "logout"
+const loginLink = document.getElementById('loginLink');
+loginLink.addEventListener('click', () => {
+    // Supprime le token d'authentification du localStorage
+    localStorage.removeItem('token');
+    // Redirige l'utilisateur vers la page de connexion
+    location.href = 'login.html';
+});
+
