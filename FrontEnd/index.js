@@ -127,9 +127,8 @@ loginLink.addEventListener('click', () => {
 
             //Modale
 
+// Fonctions liées à la modale
 let modal = null;
-
-// Ouverture modale
 
 const openModal = function (e) {
     e.preventDefault();
@@ -143,10 +142,8 @@ const openModal = function (e) {
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
 }
 
-// Fermeture modale 
-
 const closeModal = function (e) {
-    if (modal === null) return
+    if (modal === null) return;
     e.preventDefault();
     window.setTimeout(function () {
         modal.style.display = 'none';
@@ -159,30 +156,26 @@ const closeModal = function (e) {
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
 }
 
-// Eviter de fermer la modale en cliquant dessus
-
 const stopPropagation = function (e) {
-    e.stopPropagation()
+    e.stopPropagation();
 }
 
+// Gestion de l'affichage de la modale
 document.querySelectorAll('.js-modal').forEach(a => {
     a.addEventListener('click', function (e) {
         openModal(e);
         populateModalWithImages();
-    });
-    
+    });  
 })
 
-// Fermeture modale avec la touche Echap
-
+// Fermeture de la modale avec la touche Echap
 window.addEventListener('keydown', function (e) {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     }
 })
 
-// Ajout photos dans la modale 
-
+// Population de la modale avec les images
 async function populateModalWithImages() {
     try {
         const response = await fetch("http://localhost:5678/api/works");
@@ -190,34 +183,50 @@ async function populateModalWithImages() {
             throw new Error('Request failed!');
         }
         const works = await response.json();
-
-        // Sélectionne le conteneur des images dans la modale
         const modalImageContainer = modal.querySelector('.modal-images');
-
-        // Efface le contenu actuel de la modale
         modalImageContainer.innerHTML = '';
-
-        // Parcourt les travaux récupérés de l'API et les insère dans la modale
         works.forEach(work => {
-            // Crée un élément figure pour chaque image
             const figure = document.createElement('figure');
             figure.classList.add('modal-result');
-
-            // Crée un élément img pour afficher l'image du travail
             const img = document.createElement('img');
             img.src = work.imageUrl;
             img.alt = work.title;
             img.classList.add('modal-image');
             figure.appendChild(img);
-
-            // Crée un élément span pour l'icône de la poubelle
             const trashIcon = document.createElement('i');
-            trashIcon.classList.add('fa-solid', 'fa-trash-can'); // Ajoutez les classes pour l'icône de la poubelle
+            trashIcon.classList.add('fa-solid', 'fa-trash-can');
             figure.appendChild(trashIcon);
-
             modalImageContainer.appendChild(figure);
         });
     } catch (error) {
         console.error('Error fetching works:', error);
     }
+}
+
+// Gestion de la deuxième vue modale
+const openAddPhotoView = function () {
+    const galleryView = document.querySelector('.modal-gallery');
+    const addPhotoView = document.querySelector('.modal-add-work');
+    galleryView.style.display = 'none';
+    addPhotoView.style.display = 'block';
+}
+
+const openGalleryView = function () {
+    const galleryView = document.querySelector('.modal-gallery');
+    const addPhotoView = document.querySelector('.modal-add-work');
+    galleryView.style.display = 'block';
+    addPhotoView.style.display = 'none';
+}
+
+const addPhotoButton = document.querySelector('.modal-gallery input[type="submit"]');
+addPhotoButton.addEventListener('click', openAddPhotoView);
+
+const backButton = document.querySelector('.modal-add-work .js-modal-back');
+if (backButton) {
+    backButton.addEventListener('click', openGalleryView);
+}
+
+const closeButton = document.querySelector('.modal-add-work .js-modal-close');
+if (closeButton) {
+    closeButton.addEventListener('click', closeModal);
 }

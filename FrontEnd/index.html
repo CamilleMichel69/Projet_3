@@ -77,11 +77,39 @@
 <!-- Création modale -->
 <aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
 	<div class="modal-wrapper js-modal-stop">
-		<button class="js-modal-close">&times;</button>
-		<h3 id="titlemodal" >Galerie photo</h3>
-		<div class="modal-images"></div>
-		<div class="separator"></div>
-		<input type="submit" value="Ajouter une photo">
+		<div id="modal-gallery" class="modal-gallery">
+			<button class="js-modal-close">&times;</button>
+			<h3 id="titlemodal">Galerie photo</h3>
+			<div class="modal-images"></div>
+			<div class="separator-1"></div>
+			<input type="submit" value="Ajouter une photo">
+		</div>
+		<div id="modal-add-work" class="modal-add-work">
+			<button class="js-modal-back">&larr;</button>
+			<button class="js-modal-close">&times;</button>
+			<h3 id="titlemodal">Ajout photo</h3>
+			<form id="modal-form" method="post" action="#">
+				<div id= "modal-add-photo" class="modal-add-photo">
+					<i class="fa-regular fa-image"></i>
+					<label id="add-photo">+ Ajouter photo</label>
+					<input id="form-image" type="file" name="image" accept="image/*, .jpg, .jpeg, .png" required>
+					<p>jpg, png : 4mo max</p>
+				</div>
+				<div class="modal-label">
+					<label for="form-title">Titre</label>
+					<input type="text" name="title" id="form-title" value="" required>
+					<label for="form-category">Catégorie</label>
+					<select id="category-input" name="category" required>
+						<option value="" disabled selected hidden>  </option>
+						<option value="1">Objets</option>
+						<option value="2">Appartements</option>
+						<option value="3">Hôtels & retaurants</option>
+					</select>
+				</div>
+				<div class="separator-2"></div>
+				<input type="submit" value="Valider">
+			</form>
+		</div>
 	</div>
 </aside>
 </body>

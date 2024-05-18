@@ -289,6 +289,16 @@ footer nav ul {
     cursor: pointer;
 }
 
+.js-modal-back {
+	position: absolute;
+    top: 20px;
+    left: 30px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+
 #modal h3 {
 	margin-top: 50px;
 	margin-bottom: 30px;
@@ -330,14 +340,14 @@ footer nav ul {
     cursor: pointer;
 }
 
-.separator {
+.separator-1 {
 
     height: 2px;
     background-color: #ccc;
-    margin: 80px 100px 50px; /* Marge en haut et en bas de la barre */
+    margin: 80px 100px 50px;
 }
 
-#modal input[type="submit"] {
+#modal-gallery input[type="submit"] {
 	display: flex;
 	width: 40%;
 	padding: 10px;
@@ -370,6 +380,86 @@ footer nav ul {
 @keyframes slideToBottom {
 	from { transform: translateY(0px); }
 	to { transform: translateY(50px); }
+}
+
+.modal-add-work {
+	display: none;
+}
+
+#modal-form .modal-add-photo {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 30px 0 19px 0;
+	background-color: #e6eef3;
+	border-radius: 5px;
+	margin: 35px 105px 0 105px;
+}
+
+#modal-form i {
+	font-size: 80px;
+	color: #B9C5CC;
+	padding-bottom: 10px;
+}
+
+#add-photo {
+	background-color: #cdd2d6;
+	border-radius: 50px;
+	color: #306685;
+	text-align: center;
+	padding: 12px 33px;
+	cursor: pointer;
+}
+
+#form-image {
+	opacity: 0;
+}
+
+#modal-form p {
+	font-size: 10px;
+	color: #929597;
+	margin-top: -15px;
+}
+
+#modal-form .modal-label {
+	display: flex;
+	flex-direction: column;
+	padding: 10px 105px 0 105px;
+}
+
+.modal-label input[type="text"], select {
+	height: 50px;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+	border: none;
+}
+
+.modal-label #form-title, .modal-label #category-input {
+	padding-left: 16px;
+	font-family: 'Work Sans';
+	background-color: white;
+}
+
+.modal-label label {
+	padding-top: 30px;
+	padding-bottom: 10px;
+}
+
+.separator-2 {
+    height: 2px;
+    background-color: #ccc;
+    margin: 60px 105px 40px;
+}
+
+#modal-add-work input[type="submit"] {
+	display: flex;
+	width: 40%;
+	padding: 10px;
+	margin-top: 0;
+	justify-content: center;
+	background-color: #a0a0a0;
+	color: #fff;
+	border: none;
+	cursor: pointer;
 }
 
 /* Log In */
@@ -427,8 +517,6 @@ footer nav ul {
 	text-align: center;
 	font-size: 15px;
 }
-
-
 #logoutLink {
 	display:none;
 }

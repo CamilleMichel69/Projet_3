@@ -1,6 +1,6 @@
 // Récupération de l'API pour le login et connexion
 
-const loginForm = document.getElementById('loginForm'); // Déclaration du formulaire de connexion
+const loginForm = document.getElementById('loginForm');
 
 loginForm.addEventListener('submit', function(event) {
     event.preventDefault();
@@ -11,7 +11,7 @@ loginForm.addEventListener('submit', function(event) {
     };
     console.log(user);
     
-    const errorMessage = document.getElementById('errorMessage'); // Ajout de l'élément pour afficher le message d'erreur
+    const errorMessage = document.getElementById('errorMessage');
 
     fetch('http://localhost:5678/api/users/login', {
         method: 'POST',
@@ -30,9 +30,9 @@ loginForm.addEventListener('submit', function(event) {
     })
     .catch(error => {
         console.log(error);
-        errorMessage.textContent = error.message; // Affichage du message d'erreur
-        document.getElementById('email').classList.add('error-input'); // Ajout de la classe d'erreur au champ email
-        document.getElementById('password').classList.add('error-input'); // Ajout de la classe d'erreur au champ password
+        errorMessage.textContent = error.message;
+        document.getElementById('email').classList.add('error-input');
+        document.getElementById('password').classList.add('error-input');
     });
 });
 
