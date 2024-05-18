@@ -46,7 +46,7 @@
 		<h2>
 			Mes Projets 
 			<span id="editIconContainer" class="edit-icon-container">
-				<a href="#"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
+				<a href="modal" id="open-modal" class="js-modal"><i class="fa-regular fa-pen-to-square"></i> modifier</a>
 			</span>
 		</h2>
 		<div id="filters" class="filters"></div>
@@ -74,5 +74,15 @@
 		</ul>
 	</nav>
 </footer>
+<!-- Création modale -->
+<aside id="modal" class="modal" aria-hidden="true" role="dialog" aria-labelledby="titlemodal" style="display: none;">
+	<div class="modal-wrapper js-modal-stop">
+		<button class="js-modal-close">&times;</button>
+		<h3 id="titlemodal" >Galerie photo</h3>
+		<div class="modal-images"></div>
+		<div class="separator"></div>
+		<input type="submit" value="Ajouter une photo">
+	</div>
+</aside>
 </body>
 </html>
