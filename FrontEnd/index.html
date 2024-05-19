@@ -11,6 +11,7 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="index.js" defer></script>
+	<script src="modal.js" defer></script>
 </head>
 <body>
 <header>
@@ -91,8 +92,10 @@
 			<form id="modal-form" method="post" action="#">
 				<div id= "modal-add-photo" class="modal-add-photo">
 					<i class="fa-regular fa-image"></i>
-					<label id="add-photo">+ Ajouter photo</label>
-					<input id="form-image" type="file" name="image" accept="image/*, .jpg, .jpeg, .png" required>
+					<label for="form-image" class="custom-file-upload">
+						+ Ajouter photo
+					</label>
+					<input id="form-image" type="file" name="image" accept="image/*, .jpg, .jpeg, .png" required style="display: none;">					
 					<p>jpg, png : 4mo max</p>
 				</div>
 				<div class="modal-label">
@@ -103,12 +106,21 @@
 						<option value="" disabled selected hidden>  </option>
 						<option value="1">Objets</option>
 						<option value="2">Appartements</option>
-						<option value="3">Hôtels & retaurants</option>
+						<option value="3">Hotels & restaurants</option>
 					</select>
 				</div>
 				<div class="separator-2"></div>
 				<input type="submit" value="Valider">
 			</form>
+		</div>
+	</div>
+	<div id="confirmationModal" class="confirmation-modal">
+		<div class="confirmation-content">
+			<p>Êtes-vous sûr(e) de vouloir supprimer cet élément ?</p>
+			<div class="confirmation-buttons">
+				<button id="confirmYes">Oui</button>
+				<button id="confirmNo">Non</button>
+			</div>
 		</div>
 	</div>
 </aside>
