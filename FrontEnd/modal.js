@@ -217,7 +217,7 @@ imageInput.addEventListener('change', function(event) {
     const formImageInput = document.getElementById('form-image');
     const formTitleInput = document.getElementById('form-title');
     const formCategorySelect = document.getElementById('category-input');
-    const validateButton = form.querySelector('input[type="submit"]');
+    const validateButton = document.getElementById('valider');
 
     // Gestion de l'envoi du formulaire
     form.addEventListener('submit', async (event) => {
