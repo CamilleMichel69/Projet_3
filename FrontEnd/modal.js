@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-    let modal = null;
-    let workIdToDelete = null;
+    let modal = null; // Stocke la modale
+    let workIdToDelete = null; // Stocke l'Id à supprimer
     let figureToDelete = null; // Stocke l'élément figure à supprimer
 
     // Fonction pour ouvrir la modale
@@ -124,7 +124,10 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    confirmNo.addEventListener("click", closeConfirmationModal);
+    confirmNo.addEventListener("click", (e) => {
+        e.preventDefault();
+        closeConfirmationModal();
+    });
 
     // Gestion des vues modales
     const openAddPhotoView = () => {
@@ -208,25 +211,61 @@ imageInput.addEventListener('change', function(event) {
         // Lit le fichier en tant que URL de données
         reader.readAsDataURL(file);
     }
+
+    // Récupération des éléments du formulaire
+    const form = document.getElementById('modal-form');
+    const formImageInput = document.getElementById('form-image');
+    const formTitleInput = document.getElementById('form-title');
+    const formCategorySelect = document.getElementById('category-input');
+    const validateButton = form.querySelector('input[type="submit"]');
+
+    // Gestion de l'envoi du formulaire
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        // Vérification que tous les champs sont remplis
+        if (formImageInput.files.length === 0 || !formTitleInput.value || !formCategorySelect.value) {
+            alert("Veuillez remplir tous les champs avant de valider.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', formImageInput.files[0]);
+        formData.append('title', formTitleInput.value);
+        formData.append('category', formCategorySelect.value);
+
+        try {
+            const token = localStorage.getItem('token');
+            const response = await fetch("http://localhost:5678/api/works", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    accept: "application/json",
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            if (!response.ok) {
+                throw new Error('Échec de l\'envoi du nouveau projet.');
+            }
+
+            const result = await response.json();
+            console.log('Nouveau projet ajouté avec succès:', result);
+
+            // Fermer la modale
+            closeModal(event);
+
+            // Rafraîchir la galerie principale
+            await refreshGallery();
+
+        } catch (error) {
+            console.error('Erreur lors de l\'envoi du nouveau projet:', error);
+        }
+    });
+
+    // Fonction pour rafraîchir la galerie principale
+    async function refreshGallery() {
+        gallery.innerHTML = ''; // Vider la galerie existante
+        await getWorks(); // Recharger les travaux
+    }
 });
-
-
-
-
-// Gestionnaire d'événements pour le bouton "Ajouter photo"
-// const addPhotoButton = document.querySelector('.modal-add-work input[type="submit"]');
-// addPhotoButton.addEventListener('click', async () => {
-//     // Récupérer les données du formulaire
-//     const title = document.getElementById('form-title').value;
-//     const category = document.getElementById('category-input').value;
-//     const imageFile = document.getElementById('form-image').files[0];
-
-//     // Créer un objet FormData et y ajouter les données du formulaire
-//     const formData = new FormData();
-//     formData.append('title', title);
-//     formData.append('category', category);
-//     formData.append('image', imageFile);
-
-//     // Envoyer les données au backend
-//     await submitNewProject(formData);
-// });
