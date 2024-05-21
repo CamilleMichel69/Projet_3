@@ -1,4 +1,4 @@
-// Variables générales 
+            // Variables générales 
 const gallery = document.querySelector(".gallery");
 const filters = document.querySelector(".filters");
 

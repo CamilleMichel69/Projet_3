@@ -182,31 +182,34 @@ li:hover {
     color: white;
 	cursor: pointer;
 }
-.active_button {
-	color: white;
-	background-color: #1D6154;
-}
+
 .gallery {
 	width: 100%;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-column-gap: 20px;
-	grid-row-gap: 20px;
+	grid-row-gap: 40px;
 }
 
 .gallery img {
 	width: 100%;
-
+	height: 100%;
 }
+
+.gallery figcaption {
+	margin-top: 5px;
+}
+
 #contact {
 	width: 50%;
-margin: auto;
+	margin: auto;
 }
 #contact > * {
 	text-align: center;
 
 }
 #contact h2{
+	padding-top: 50px;
 	margin-bottom: 20px;
 }
 #contact form {
@@ -324,7 +327,7 @@ footer nav ul {
 	position: relative;
     margin-top: 30px;
 	width: 100%;
-    height: auto; 
+    height: 85%; 
 }
 
 .fa-trash-can {
@@ -513,7 +516,7 @@ footer nav ul {
     margin: 60px 105px 40px;
 }
 
-#modal-add-work input[type="submit"] {
+.modal-add-work input[type="submit"] {
 	display: flex;
 	width: 40%;
 	padding: 10px;
@@ -525,7 +528,12 @@ footer nav ul {
 	cursor: pointer;
 }
 
-.valid {
+.active_button {
+	color: white;
+	background-color: #1D6154;
+}
+
+#valider.valid {
 	background-color: #1D6154;
 }
 
