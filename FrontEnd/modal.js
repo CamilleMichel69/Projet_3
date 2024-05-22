@@ -11,6 +11,7 @@ const openModal = (e) => {
     target.removeAttribute('aria-hidden');
     target.setAttribute('aria-modal', 'true');
     modal = target;
+    openGalleryView();
     modal.addEventListener('click', closeModal);
     modal.querySelector('.js-modal-close').addEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').addEventListener('click', stopPropagation);
@@ -30,6 +31,7 @@ const closeModal = (e) => {
     modal.removeEventListener('click', closeModal); 
     modal.querySelector('.js-modal-close').removeEventListener('click', closeModal);
     modal.querySelector('.js-modal-stop').removeEventListener('click', stopPropagation);
+    resetModalFields();
 }
 
 // Arrêter la propagation de l'événement
@@ -37,17 +39,30 @@ const stopPropagation = (e) => {
     e.stopPropagation();
 }
 
-// Ouvrir la modale principale au clic
-document.querySelectorAll('.js-modal').forEach(a => {
-    a.addEventListener('click', openModal);  
-});
-
 // Fermer la modale principale avec la touche Echap
 window.addEventListener('keydown', (e) => {
     if (e.key === "Escape" || e.key === "Esc") {
         closeModal(e);
     }
 });
+
+// Ouvrir la modale principale au clic
+document.querySelector('.js-modal').addEventListener('click', openModal);  
+
+// Gestion des vues modales
+const openAddPhotoView = () => {
+    document.querySelector('.modal-gallery').style.display = 'none';
+    document.querySelector('.modal-add-work').style.display = 'block';
+}
+
+const openGalleryView = () => {
+    document.querySelector('.modal-gallery').style.display = 'block';
+    document.querySelector('.modal-add-work').style.display = 'none';
+}
+
+document.querySelector('.modal-gallery input[type="submit"]').addEventListener('click', openAddPhotoView);
+document.querySelector('.modal-add-work .js-modal-back').addEventListener('click', openGalleryView);
+document.querySelector('.modal-add-work .js-modal-close').addEventListener('click', closeModal);
 
 // Peupler la modale avec les images
 async function populateModalWithImages() {
@@ -124,57 +139,21 @@ confirmYes.addEventListener("click", async () => {
 
 confirmNo.addEventListener("click", closeConfirmationModal);
 
-// Gestion des vues modales
-const openAddPhotoView = () => {
-    document.querySelector('.modal-gallery').style.display = 'none';
-    document.querySelector('.modal-add-work').style.display = 'block';
+// Rafraîchir la galerie principale
+const refreshGallery = async () => {
+    gallery.innerHTML = ''; // Vider la galerie existante
+    await getWorks(); // Recharger les travaux
 }
-
-const openGalleryView = () => {
-    document.querySelector('.modal-gallery').style.display = 'block';
-    document.querySelector('.modal-add-work').style.display = 'none';
-}
-
-document.querySelector('.modal-gallery input[type="submit"]').addEventListener('click', openAddPhotoView);
-document.querySelector('.modal-add-work .js-modal-back').addEventListener('click', openGalleryView);
-document.querySelector('.modal-add-work .js-modal-close').addEventListener('click', closeModal);
-
-// Ajout nouveau projet
-const submitNewProject = async (formData) => {
-    try {
-        const response = await fetch("http://localhost:5678/api/works", {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token'),
-            },
-            body: formData,
-        });
-        if (!response.ok) throw new Error('Échec de l\'envoi du nouveau projet.');
-        
-        const result = await response.json();
-        console.log('Nouveau projet ajouté avec succès:', result);
-    } catch (error) {
-        console.error('Erreur lors de l\'envoi du nouveau projet:', error);
-    }
-};
 
 // Ajout nouvelle photo 
-const imageInput = document.getElementById('form-image');
 const modalAddPhoto = document.getElementById('modal-add-photo');
+const imageInput = document.getElementById('form-image');
 const formTitleInput = document.getElementById('form-title');
 const formCategorySelect = document.getElementById('category-input');
 const validateButton = document.getElementById('valider');
 const errorMessage = document.createElement('p');
 errorMessage.classList.add('error-message');
 modalAddPhoto.appendChild(errorMessage);
-
-const updateValidateButtonState = () => {
-    if (imageInput.files.length > 0 && formTitleInput.value.trim() !== '' && formCategorySelect.value.trim() !== '') {
-        validateButton.classList.add('valid');
-    } else {
-        validateButton.classList.remove('valid');
-    }
-}
 
 const handleImageInputChange = (event) => {
     const file = event.target.files[0];
@@ -237,6 +216,14 @@ const handleSubmitNewProject = async (event) => {
     }
 };
 
+const updateValidateButtonState = () => {
+    if (imageInput.files.length > 0 && formTitleInput.value.trim() !== '' && formCategorySelect.value.trim() !== '') {
+        validateButton.classList.add('valid');
+    } else {
+        validateButton.classList.remove('valid');
+    }
+}
+
 const resetModalFields = () => {
     imageInput.value = '';
     formTitleInput.value = '';
@@ -259,9 +246,3 @@ document.getElementById('form-image').addEventListener('change', handleImageInpu
 formTitleInput.addEventListener('input', updateValidateButtonState);
 formCategorySelect.addEventListener('change', updateValidateButtonState);
 document.getElementById('modal-form').addEventListener('submit', handleSubmitNewProject);
-
-// Rafraîchir la galerie principale
-const refreshGallery = async () => {
-    gallery.innerHTML = ''; // Vider la galerie existante
-    await getWorks(); // Recharger les travaux
-}
