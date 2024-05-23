@@ -11,7 +11,6 @@ async function getWorks() {
             throw new Error('Request failed!');
         }
         const works = await response.json();
-        console.table(works);
 
         works.forEach(work => {
             const figure = document.createElement('figure');
@@ -45,7 +44,6 @@ async function getCategories() {
             throw new Error('Request failed!');
         }
         const categories = await response.json();
-        console.log(categories);
         
         // Rajout du bouton filtre 'Tous'
         categories.unshift({ id: 0, name: 'Tous' });

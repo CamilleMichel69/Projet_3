@@ -411,7 +411,7 @@ footer nav ul {
 	border: none;
 	cursor: pointer;
 }
-#modal input[type="submit"]:hover {
+#modal-gallery input[type="submit"]:hover {
 	background-color: #14503B;
 }
 

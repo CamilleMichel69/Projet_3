@@ -159,8 +159,20 @@ const handleImageInputChange = (event) => {
     const file = event.target.files[0];
 
     if (file) {
+        // Vérifie si la taille du fichier dépasse 4 Mo
         if (file.size > 4 * 1024 * 1024) { // Vérifie si la taille du fichier dépasse 4 Mo
             errorMessage.textContent = 'La taille de l\'image ne doit pas dépasser 4 Mo.';
+            errorMessage.style.color = '#f46d63';
+            errorMessage.style.fontSize = '12px';
+            return;
+        } else {
+            errorMessage.textContent = '';
+        }
+
+        // Vérifie si le type du fichier est JPG ou PNG
+        const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+        if (!validImageTypes.includes(file.type)) {
+            errorMessage.textContent = 'Le fichier doit être au format JPG ou PNG.';
             errorMessage.style.color = '#f46d63';
             errorMessage.style.fontSize = '12px';
             return;
@@ -178,6 +190,7 @@ const handleImageInputChange = (event) => {
         };
         reader.readAsDataURL(file);
     }
+    updateValidateButtonState();
 };
 
 const handleSubmitNewProject = async (event) => {
@@ -217,10 +230,16 @@ const handleSubmitNewProject = async (event) => {
 };
 
 const updateValidateButtonState = () => {
+    console.log('Image files:', imageInput.files.length);
+        console.log('Title input:', formTitleInput.value.trim());
+        console.log('Category select:', formCategorySelect.value.trim());
+
     if (imageInput.files.length > 0 && formTitleInput.value.trim() !== '' && formCategorySelect.value.trim() !== '') {
         validateButton.classList.add('valid');
+        validateButton.removeAttribute('disabled');
     } else {
         validateButton.classList.remove('valid');
+        validateButton.setAttribute('disabled', true);
     }
 }
 
