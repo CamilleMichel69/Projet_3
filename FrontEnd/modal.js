@@ -2,6 +2,12 @@
 let modal = null; // Stocke la modale principale
 let workIdToDelete = null; // Stocke l'Id à supprimer
 let figureToDelete = null; // Stocke l'élément figure à supprimer
+let imageInput = null;
+
+document.addEventListener('DOMContentLoaded', () => {
+    imageInput = document.getElementById('form-image');
+    imageInput.addEventListener('change', handleImageInputChange);
+});
 
 // Ouvrir la modale principale
 const openModal = (e) => {
@@ -147,13 +153,13 @@ const refreshGallery = async () => {
 
 // Ajout nouvelle photo 
 const modalAddPhoto = document.getElementById('modal-add-photo');
-const imageInput = document.getElementById('form-image');
+const modalAddWork = document.getElementById('modal-add-work');
+imageInput = document.getElementById('form-image');
 const formTitleInput = document.getElementById('form-title');
 const formCategorySelect = document.getElementById('category-input');
 const validateButton = document.getElementById('valider');
 const errorMessage = document.createElement('p');
 errorMessage.classList.add('error-message');
-modalAddPhoto.appendChild(errorMessage);
 
 const handleImageInputChange = (event) => {
     const file = event.target.files[0];
@@ -161,13 +167,14 @@ const handleImageInputChange = (event) => {
     if (file) {
         // Vérifie si la taille du fichier dépasse 4 Mo
         if (file.size > 4 * 1024 * 1024) { // Vérifie si la taille du fichier dépasse 4 Mo
+            modalAddPhoto.appendChild(errorMessage);
             errorMessage.textContent = 'La taille de l\'image ne doit pas dépasser 4 Mo.';
             errorMessage.style.color = '#f46d63';
             errorMessage.style.fontSize = '12px';
             return;
         } else {
             errorMessage.textContent = '';
-        }
+        };
 
         // Vérifie si le type du fichier est JPG ou PNG
         const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png'];
@@ -178,7 +185,7 @@ const handleImageInputChange = (event) => {
             return;
         } else {
             errorMessage.textContent = '';
-        }
+        };
 
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -189,17 +196,12 @@ const handleImageInputChange = (event) => {
             modalAddPhoto.appendChild(imgPreview);
         };
         reader.readAsDataURL(file);
-    }
+    };
     updateValidateButtonState();
 };
 
 const handleSubmitNewProject = async (event) => {
     event.preventDefault();
-    if (imageInput.files.length === 0 || !formTitleInput.value || !formCategorySelect.value) {
-        alert("Veuillez remplir tous les champs avant de valider.");
-        return;
-    }
-
     const formData = new FormData();
     formData.append('image', imageInput.files[0]);
     formData.append('title', formTitleInput.value);
@@ -219,29 +221,31 @@ const handleSubmitNewProject = async (event) => {
         if (!response.ok) throw new Error('Échec de l\'envoi du nouveau projet.');
         
         const result = await response.json();
-        console.log('Nouveau projet ajouté avec succès:', result);
+        console.log('Nouveau projet ajouté avec succès !');
 
         closeModal(event);
         resetModalFields();
         await refreshGallery();
     } catch (error) {
         console.error('Erreur lors de l\'envoi du nouveau projet:', error);
-    }
+    };
 };
 
 const updateValidateButtonState = () => {
-    console.log('Image files:', imageInput.files.length);
-        console.log('Title input:', formTitleInput.value.trim());
-        console.log('Category select:', formCategorySelect.value.trim());
-
+    modalAddWork.appendChild(errorMessage);
     if (imageInput.files.length > 0 && formTitleInput.value.trim() !== '' && formCategorySelect.value.trim() !== '') {
         validateButton.classList.add('valid');
         validateButton.removeAttribute('disabled');
+        errorMessage.textContent = '';
     } else {
         validateButton.classList.remove('valid');
         validateButton.setAttribute('disabled', true);
-    }
-}
+        errorMessage.textContent = 'Veuillez remplir tous les champs';
+        errorMessage.style.color = '#f46d63';
+        errorMessage.style.fontSize = '15px';
+        errorMessage.style.textAlign = 'center';
+    };
+};
 
 const resetModalFields = () => {
     imageInput.value = '';
@@ -257,8 +261,8 @@ const resetModalFields = () => {
         <input id="form-image" type="file" name="image" accept="image/*, .jpg, .jpeg, .png" required style="display: none;">					
         <p>jpg, png : 4mo max</p>
     `;
-
-    document.getElementById('form-image').addEventListener('change', handleImageInputChange);
+    imageInput = document.getElementById('form-image');
+    imageInput.addEventListener('change', handleImageInputChange);
 };
 
 document.getElementById('form-image').addEventListener('change', handleImageInputChange);

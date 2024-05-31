@@ -537,6 +537,10 @@ footer nav ul {
 	background-color: #1D6154;
 }
 
+#valider.valid:hover {
+	background-color: #14503B;
+}
+
 /* Log In */
 
 .login_link {
